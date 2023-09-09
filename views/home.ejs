@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ejs for home </title>
+    <link rel="stylesheet" href="./css/home.css">
+
+    <style>  
+     .box2{
+        max-width: 50px;
+        border: 1px lightblue;
+
+     }
+    
+    </style>
+</head>
+<body>
+    <h1>welcome to Home Page of Connect with BBD</h1>
+    <div>
+    <div class="box2">
+        <form action="./personal_value" method="post">
+          <p> Email  <input type="text" placeholder="Email" name="Email"></p>
+          <p> Password<input type="password" placeholder="password" name="password"></p>
+          <input type="submit" placeholder="login">
+
+        </form>
+    </div>
+
+ <div>
+    <% for(let i of personal_value){ %>
+    <p><%=i.Email%></p>
+    <p><%=i.password%></p>
+    
+    
+    <%} %>
+ </div>
+
+   <div class="signup"> New <a href=""> SignUp</a> </div>
+    </div>
+
+
+
+    <% for(let i=0;i<10;i++) { %>
+    
+        <p> <%=i%></p>
+        
+        
+        
+        <%} %>
+    
+</body>
+</html>
