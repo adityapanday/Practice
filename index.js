@@ -4,6 +4,9 @@ const path = require('path');
 
 
 const port = 1000;
+
+const db = require('./config/mongoose');
+const Personal = require('./modal/signin');
 const app = express();
 
 
@@ -46,12 +49,19 @@ app.use(express.urlencoded());
 app.use(express.static('assets'));
 
 
-app.post('/personal_value' , (req , res)=>{
-    signin.push({
-        Email : req.body.Email ,
-       password :req.body.password
+app.post('/personal_value', (req, res) => {
+    // Assuming you have defined the 'Personal' model for your database
+    
+    Personal.create({
+        Email: req.body.Email,
+        password: req.body.password
+    }).then(() => {
+        console.log("Added to database");
+        return res.redirect('/');
+    }).catch((err) => {
+        console.error("Error in storing in the database:", err);
+        return ;
     });
-    return res.redirect('/');
 });
 
 
@@ -69,13 +79,35 @@ app.get('/contact' , (req , res)=>{
 // });
 
 app.get('/' , (req , res)=>{
-   return  res.render('home' , {personal_value :signin });
+    //home is the ejs file name
+   return  res.render('home' , {personal_value1 :signin });
 //    return res.render('home.ejs');
 });
 
-// app.delete('/' , (req ,res)=>{
-//   req.body.delete()
-// });
+app.get('/delete_value/' , (req ,res)=>{
+   //here i am geting params
+   let dval = req.query.Email
+  
+
+   //dval2 can be any name in its place 
+   let delval =  signin.findIndex(dval2=> dval2.Email == dval);
+  
+   if(delval != -1){
+    signin.splice(delval ,1);
+   }
+   return res.redirect('back');
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(port , ()=>{
