@@ -78,25 +78,81 @@ app.get('/contact' , (req , res)=>{
 //     });
 // });
 
-app.get('/' , (req , res)=>{
-    //home is the ejs file name
-   return  res.render('home' , {personal_value1 :signin });
-//    return res.render('home.ejs');
-});
 
-app.get('/delete_value/' , (req ,res)=>{
-   //here i am geting params
-   let dval = req.query.Email
+
+//nice vala code thik h but ab ya call back accept nahi karta hence use async await
+
+
+// app.get('/' , (req , res)=>{
+
+//        Personal.find({} , ()=>{
+         
+//      } ).then((Personal)=>{
+//         return res.redirect('home' , {personal_value1 : Personal});
+//      }).catch((err)=>{return console.log("*******error*****"+err);});
+
+
+
+
+
+//     //home is the ejs file name
+// //    return  res.render('home' , {personal_value1 :signin });
+// //    return res.render('home.ejs');
+// });
+
+
+
+
+app.get('/', async (req, res) => {
+    try {
+      // Use the `find` method on the Personal model to retrieve data
+      const personalData = await Personal.find({});
+  
+      // Render a view or send a response with the data
+      res.render('home', { personal_value1: personalData });
+    } catch (err) {
+      console.error("Error: " + err);
+      res.status(500).send("Internal Server Error"); // Handle the error gracefully
+    }
+  });
   
 
-   //dval2 can be any name in its place 
-   let delval =  signin.findIndex(dval2=> dval2.Email == dval);
+// app.get('/delete_value/' , (req ,res)=>{
+//    //here i am geting params
+//    let dval = req.query.Email
   
-   if(delval != -1){
-    signin.splice(delval ,1);
-   }
-   return res.redirect('back');
-});
+
+//    //dval2 can be any name in its place 
+//    let delval =  signin.findIndex(dval2=> dval2.Email == dval);
+  
+//    if(delval != -1){
+//     signin.splice(delval ,1);
+//    }
+//    return res.redirect('back');
+// });
+
+// app.get('/delete_value' , async(req , res)=>{
+//      try{
+//         let value = req.query.id;
+//         let the = await Personal.findByIdAndDelete(value ,{});
+//          return res.redirect('back') ;
+//      }catch{
+//         return console.log("******Error******");
+//      }
+
+
+// });
+app.get('/delete_value/', (req, res)=> {
+    const id = req.query.id;
+  
+    Personal.findByIdAndDelete(id).then(() => {
+      console.log("suscess in deleating the mobile" );
+      return res.redirect('back');
+    }).catch(err => {
+      console.log('Error while deleting:', err);
+      return;
+    });
+  });
 
 
 

@@ -31,7 +31,8 @@
     <% for(let i of personal_value1){ %>
     <p><%=i.Email%></p>
     <p><%=i.password%></p>
-    <p> <a href="/delete_value/?Email=<%=i.Email%>"> delete </a></p>
+    <!-- <p> <a href="/delete_value/?Email=<%=i.Email%>"> delete </a></p> -->
+    <p> <a href="/delete_value/?id=<%=i._id%>"> delete </a></p>
     
     
     <%} %>
